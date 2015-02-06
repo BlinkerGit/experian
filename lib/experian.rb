@@ -7,13 +7,14 @@ require "experian/client"
 require "experian/request"
 require "experian/response"
 require "experian/connect_check"
+require 'experian/precise_id'
 
 module Experian
   include Experian::Constants
 
   class << self
 
-    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number
+    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number, :vendor_version
     attr_accessor :test_mode
 
     def configure
@@ -44,6 +45,7 @@ module Experian
       @net_connect_uri.password = Experian.password
 
       @net_connect_uri
+      'https://chime_test:On3d3bit@dm2.experian.com/fraudsolutions/xmlgateway/preciseid'
     end
 
     def perform_ecals_lookup
