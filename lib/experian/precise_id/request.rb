@@ -5,7 +5,7 @@ module Experian
       def build_request
         super do |xml|
           xml.tag!('EAI', Experian.eai)
-          xml.tag!('DBHost', ConnectCheck.db_host)
+          xml.tag!('DBHost', PreciseId.db_host)
           add_reference_id(xml)
           xml.tag!('Request', :xmlns => Experian::XML_REQUEST_NAMESPACE, :version => '1.0') do
             xml.tag!('Products') do
