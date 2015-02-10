@@ -14,7 +14,7 @@ module Experian
 
   class << self
 
-    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number, :vendor_version
+    attr_accessor :eai, :preamble, :op_initials, :subcode, :user, :password, :vendor_number, :vendor_version, :ecals_enabled, :xml_gateway_url
     attr_accessor :test_mode
 
     def configure
@@ -38,14 +38,17 @@ module Experian
     end
 
     def net_connect_uri
+      @net_connect_uri = URI.parse(Experian.xml_gateway_url) if Experian.xml_gateway_url
+
       perform_ecals_lookup if ecals_lookup_required?
+
+      assert_experian_domain
 
       # setup basic authentication
       @net_connect_uri.user = Experian.user
       @net_connect_uri.password = Experian.password
 
       @net_connect_uri
-      'https://chime_test:On3d3bit@dm2.experian.com/fraudsolutions/xmlgateway/preciseid'
     end
 
     def perform_ecals_lookup
@@ -57,7 +60,7 @@ module Experian
     end
 
     def ecals_lookup_required?
-      @net_connect_uri.nil? || @ecals_last_update.nil? || Time.now - @ecals_last_update > Experian::ECALS_TIMEOUT
+      Experian.ecals_enabled && (@net_connect_uri.nil? || @ecals_last_update.nil? || Time.now - @ecals_last_update > Experian::ECALS_TIMEOUT)
     end
 
     def assert_experian_domain
