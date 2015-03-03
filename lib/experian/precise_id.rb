@@ -13,8 +13,8 @@ module Experian
         "E" => "ID No Match"
     }
 
-    DB_HOST = "CIS"
-    DB_HOST_TEST = "STAR"
+    DB_HOST = "PRECISE_ID"
+    DB_HOST_TEST = "PRECISE_ID_TEST"
 
     def self.db_host
       Experian.test_mode? ? DB_HOST_TEST : DB_HOST
