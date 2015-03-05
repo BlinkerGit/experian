@@ -22,7 +22,7 @@ module Experian
       end
 
       def add_xml_version(xml)
-        xml.tag!('XMLVersion', '04')
+        xml.tag!('XMLVersion', '05')
       end
 
       def add_reference_id(xml)
