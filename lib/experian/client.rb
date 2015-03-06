@@ -1,3 +1,6 @@
+require 'openssl'
+require 'base64'
+
 module Experian
   class Client
 
@@ -18,7 +21,7 @@ module Experian
     end
 
     def request_headers
-      { "Content-Type" => "application/x-www-form-urlencoded" }
+      { "Content-Type" => "application/x-www-form-urlencoded", 'Authorization' => "Basic #{Base64.strict_encode64(Experian.user + ':' + Experian.password)}" }
     end
 
     def invalid_login?
