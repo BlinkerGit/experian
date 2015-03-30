@@ -2,6 +2,12 @@ module Experian
   module PreciseId
     class Response < Experian::Response
 
+      def error_code
+        if @response.has_key?('Products') && @response['Products'].has_key?('PreciseIDServer') && @response['Products']['PreciseIDServer'].has_key?('Error') && @response['Products']['PreciseIDServer']['Error'].has_key?('ErrorCode')
+          @response['Products']['PreciseIDServer']['Error']['ErrorCode']
+        end
+      end
+
       def error_message
         if @response.has_key?('Products') && @response['Products'].has_key?('PreciseIDServer') && @response['Products']['PreciseIDServer'].has_key?('Error') && @response['Products']['PreciseIDServer']['Error'].has_key?('ErrorDescription')
           @response['Products']['PreciseIDServer']['Error']['ErrorDescription']
