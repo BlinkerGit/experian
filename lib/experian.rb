@@ -7,6 +7,7 @@ require "experian/client"
 require "experian/request"
 require "experian/response"
 require "experian/connect_check"
+require "experian/credit_profile"
 require 'experian/precise_id'
 
 module Experian
@@ -47,7 +48,7 @@ module Experian
       # setup basic authentication
       #@net_connect_uri.user = Experian.user
       #@net_connect_uri.password = Experian.password
-
+puts @net_connect_uri.to_s
       @net_connect_uri
     end
 

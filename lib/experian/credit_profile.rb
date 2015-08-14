@@ -1,9 +1,9 @@
-require 'experian/precise_id/client'
-require 'experian/precise_id/request'
-require 'experian/precise_id/response'
+require 'experian/credit_profile/client'
+require 'experian/credit_profile/request'
+require 'experian/credit_profile/response'
 
 module Experian
-  module PreciseId
+  module CreditProfile
 
     MATCH_CODES = {
       "A" => "Deceased/Non-Issued Social Security Number",
@@ -13,16 +13,17 @@ module Experian
       "E" => "ID No Match"
     }
 
-    DB_HOST = "PRECISE_ID"
-    DB_HOST_TEST = "PRECISE_ID_TEST"
+    DB_HOST = "CIS"
+    DB_HOST_TEST = "STAR"
 
     def self.db_host
       Experian.test_mode? ? DB_HOST_TEST : DB_HOST
     end
 
     # convenience method
-    def self.verify_identity(options = {})
-      Client.new.verify_identity(options)
+    def self.check_credit(options = {})
+      Client.new.check_credit(options)
     end
+
   end
 end

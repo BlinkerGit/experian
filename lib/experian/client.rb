@@ -8,6 +8,9 @@ module Experian
 
     def submit_request
       connection = Excon.new(Experian.net_connect_uri.to_s, idempotent: true)
+      puts request.xml
+      puts request_body
+      ap request_headers
       @raw_response = connection.post(body: request_body, headers: request_headers)
       raise Experian::Forbidden, "Invalid Experian login credentials" if invalid_login?
       @raw_response.body
@@ -21,7 +24,7 @@ module Experian
     end
 
     def request_headers
-      { "Content-Type" => "application/x-www-form-urlencoded", 'Authorization' => "Basic #{Base64.strict_encode64(Experian.user + ':' + Experian.password)}" }
+      { "Content-Type" => "application/x-www-form-urlencoded", "Content-Length" => request_body.length, 'Authorization' => "Basic #{Base64.strict_encode64(Experian.user + ':' + Experian.password)}" }
     end
 
     def invalid_login?
