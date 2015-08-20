@@ -8,9 +8,6 @@ module Experian
 
     def submit_request
       connection = Excon.new(Experian.net_connect_uri.to_s, idempotent: true)
-      puts request.xml
-      puts request_body
-      ap request_headers
       @raw_response = connection.post(body: request_body, headers: request_headers)
       raise Experian::Forbidden, "Invalid Experian login credentials" if invalid_login?
       @raw_response.body

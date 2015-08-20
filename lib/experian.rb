@@ -45,10 +45,6 @@ module Experian
 
       assert_experian_domain
 
-      # setup basic authentication
-      #@net_connect_uri.user = Experian.user
-      #@net_connect_uri.password = Experian.password
-puts @net_connect_uri.to_s
       @net_connect_uri
     end
 
