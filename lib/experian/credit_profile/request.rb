@@ -102,7 +102,15 @@ module Experian
         end
       end
 
-      def add_output_type(xml)
+     def add_output_type_tty(xml)
+        xml.tag!('OutputType') do
+          xml.tag!('TTY') do
+            xml.tag!('Heading',         'Y')
+          end
+        end
+      end
+
+      def add_output_type_arf(xml)
         xml.tag!('OutputType') do
           xml.tag!('ARF') do
             xml.tag!('ARFVersion', Experian::ARF_VERSION)
