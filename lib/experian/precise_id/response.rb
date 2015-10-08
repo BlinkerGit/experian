@@ -16,6 +16,10 @@ module Experian
         end
       end
 
+      def success?
+        completion_code == "0000"
+      end
+
       def error?
         completion_code != "0000" || (@response.has_key?('Products') && @response['Products'].has_key?('PreciseIDServer') && @response['Products']['PreciseIDServer'].has_key?('Error'))
       end
