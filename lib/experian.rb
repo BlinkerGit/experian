@@ -49,7 +49,7 @@ module Experian
     end
 
     def perform_ecals_lookup
-      @net_connect_uri = URI.parse(Excon.get(ecals_uri.to_s).body)
+      @net_connect_uri = URI.parse(Excon.get(ecals_uri.to_s).body.strip)
       assert_experian_domain
       @ecals_last_update = Time.now
     rescue Excon::Errors::SocketError => e
