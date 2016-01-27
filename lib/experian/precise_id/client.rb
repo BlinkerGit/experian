@@ -2,6 +2,20 @@ module Experian
   module PreciseId
     class Client < Experian::Client
 
+      def submit_request
+        connection = Excon.new(precise_uri, idempotent: true)
+        @raw_response = connection.post(body: request_body, headers: request_headers)
+        raise Experian::Forbidden, "Invalid Experian login credentials" if invalid_login?
+        @raw_response.body
+
+      rescue Excon::Errors::SocketError => e
+        raise Experian::ClientError, "Could not connect to Experian: #{e.message}"
+      end
+
+      def precise_uri
+        "https://#{Experian.test_mode ? 'dm-' : ''}sgw1.experian.com/fraudsolutions/xmlgateway/preciseid"
+      end
+
       def verify_identity(options = {})
         assert_precise_id_options(options)
         @request = Request.new(options)
