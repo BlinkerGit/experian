@@ -27,6 +27,10 @@ module Experian
         raise Experian::ArgumentError, "Required options missing: first_name, last_name, street, city, state, zip, dob, reference_number, precise_id_type"
       end
 
+      def invalid_login?
+        @raw_response.body =~ /<ns1:faultstring>/ || super
+      end
+
     end
   end
 end
