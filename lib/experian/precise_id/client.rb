@@ -13,7 +13,7 @@ module Experian
       end
 
       def precise_uri
-        "https://#{Experian.test_mode ? 'dm-sgw1' : 'pid-sgw'}.experian.com/fraudsolutions/xmlgateway/preciseid"
+        "https://#{Experian.test_mode ? 'dm-sgw1' : 'pid-sgw.secure'}.experian.com/fraudsolutions/xmlgateway/preciseid"
       end
 
       def verify_identity(options = {})
