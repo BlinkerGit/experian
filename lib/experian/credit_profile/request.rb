@@ -12,6 +12,7 @@ module Experian
               xml.tag!('CreditProfile') do
                 add_subscriber(xml)
                 add_applicant(xml)
+                add_disclosure(xml)
                 add_account_type(xml)
                 add_output_type_xml(xml)
                 add_vendor(xml)
@@ -82,6 +83,21 @@ module Experian
         # Not Implemented
       end
 
+      def add_disclosure(xml)
+        xml.tag!('AddOns') do
+          xml.tag!('RiskModels') do
+            xml.tag!('VantageScore3', 'Y')
+          end
+
+          xml.tag!('CreditScoreExceptionNotice') do
+            xml.tag!('NoticeType', 'Generic')
+            xml.tag!('RiskModel') do
+              xml.tag!('VantageScore3', 'Y')
+            end
+          end
+        end if @options[:score_disclosure]
+      end
+
       def add_account_type(xml)
         xml.tag!('AccountType') do
           xml.tag!('Type', @options[:account_type])
@@ -97,7 +113,7 @@ module Experian
             xml.tag!('ARFVersion',      Experian::ARF_VERSION)
             xml.tag!('Demographics',    'Y')
             xml.tag!('Segment130',      'Y')
-            xml.tag!('ScorePercentile', 'Y')
+            # xml.tag!('ScorePercentile', 'Y') # incompatible with score_disclosure
           end
         end
       end
